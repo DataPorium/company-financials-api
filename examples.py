@@ -19,7 +19,7 @@ from dataporium import DataPorium, to_frame
 
 # name: (question, method, parameters, key of the rows inside the answer)
 EXAMPLES = {
-    'income-statement': ('Income statement, main lines, annual and quarterly', 'income_statements_summary', {'symbol': 'AAPL'}, None),
+    'income-statement': ('Income statement of one quarter, main lines', 'income_statements_summary', {'symbol': 'AAPL', 'fiscal_year_qtr': '2025Q4'}, None),
     'income-statement-annual': ('Full income statement, every line, annual', 'income_statements', {'symbol': 'AAPL', 'period_type': 'Annual'}, None),
     'balance-sheet': ('Balance sheet, main lines', 'balance_sheet_statements_summary', {'symbol': 'MSFT'}, None),
     'cash-flow': ('Cash flow statement, main lines', 'cash_flow_statements_summary', {'symbol': 'MSFT'}, None),

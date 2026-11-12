@@ -13,7 +13,7 @@ export DATAPORIUM_API_KEY="YOUR_API_KEY"
 from dataporium import DataPorium, to_frame
 
 dp = DataPorium()   # reads DATAPORIUM_API_KEY
-answer = dp.income_statements_summary(symbol="AAPL")
+answer = dp.income_statements_summary(symbol="AAPL", fiscal_year_qtr="2025Q4")
 print(to_frame(answer).head())
 ```
 
@@ -32,7 +32,7 @@ python examples.py income-statement --csv out.csv
 
 | Question | Example | Endpoint |
 |---|---|---|
-| Income statement, main lines, annual and quarterly | [`income-statement`](#income-statement) | `GET /income-statements-summary` |
+| Income statement of one quarter, main lines | [`income-statement`](#income-statement) | `GET /income-statements-summary` |
 | Full income statement, every line, annual | [`income-statement-annual`](#income-statement-annual) | `GET /income-statements` |
 | Balance sheet, main lines | [`balance-sheet`](#balance-sheet) | `GET /balance-sheet-statements-summary` |
 | Cash flow statement, main lines | [`cash-flow`](#cash-flow) | `GET /cash-flow-statements-summary` |
@@ -51,17 +51,17 @@ python examples.py income-statement --csv out.csv
 ## Financial statements
 
 <a id="income-statement"></a>
-### Income statement, main lines, annual and quarterly
+### Income statement of one quarter, main lines
 
 ```python
-dp.income_statements_summary(symbol="AAPL")
+dp.income_statements_summary(symbol="AAPL", fiscal_year_qtr="2025Q4")
 ```
 
 ```bash
-curl -H "apikey: $DATAPORIUM_API_KEY" "https://api.dataporium.io/income-statements-summary?symbol=AAPL"
+curl -H "apikey: $DATAPORIUM_API_KEY" "https://api.dataporium.io/income-statements-summary?symbol=AAPL&fiscal_year_qtr=2025Q4"
 ```
 
-Each period holds its lines as `{metric, value}` under `income_statement`, with `period_type` Annual or Quarterly. Add `fiscal_year_qtr=2025Q2`, or `fiscal_year` with `fiscal_qtr`, for one period.
+Each period holds its lines as `{metric, value}` under `income_statement`. Leave out `fiscal_year_qtr` for every period, annual and quarterly; `fiscal_year` with `fiscal_qtr` also works.
 
 <a id="income-statement-annual"></a>
 ### Full income statement, every line, annual
