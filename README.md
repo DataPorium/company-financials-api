@@ -1,6 +1,6 @@
 # Company financials API: income statements, balance sheets, cash flows, business segments, SEC filings and earnings calls
 
-Get the fundamentals of US listed companies from their SEC filings: income statement, balance sheet and cash flow (summary or every line), revenue by business segment, product and region, SEC filings, earnings call transcripts, investor presentations, the company profile, mergers and acquisitions, and patents. Every example is one request to the [DataPorium](https://dataporium.tech) REST API, shown in Python and curl.
+Get the fundamentals of US listed companies from their SEC filings: income statement, balance sheet and cash flow (summary or every line), revenue by business segment, product and region, SEC filings, earnings call transcripts, investor presentations, the company profile and patents. Every example is one request to the [DataPorium](https://dataporium.tech) REST API, shown in Python and curl.
 
 ## Quick start
 
@@ -32,7 +32,7 @@ python examples.py income-statement --csv out.csv
 
 | Question | Example | Endpoint |
 |---|---|---|
-| Income statement, main lines, every quarter | [`income-statement`](#income-statement) | `GET /income-statements-summary` |
+| Income statement, main lines, annual and quarterly | [`income-statement`](#income-statement) | `GET /income-statements-summary` |
 | Full income statement, every line, annual | [`income-statement-annual`](#income-statement-annual) | `GET /income-statements` |
 | Balance sheet, main lines | [`balance-sheet`](#balance-sheet) | `GET /balance-sheet-statements-summary` |
 | Cash flow statement, main lines | [`cash-flow`](#cash-flow) | `GET /cash-flow-statements-summary` |
@@ -45,14 +45,13 @@ python examples.py income-statement --csv out.csv
 | Investor and earnings presentations | [`presentations`](#presentations) | `GET /presentations` |
 | Company profile | [`company-profile`](#company-profile) | `GET /company-info` |
 | Industry classification (NAICS, SIC) | [`industry`](#industry) | `GET /industry` |
-| Acquisitions made or received by a company | [`mergers`](#mergers) | `GET /ma-transactions-summary` |
 | Most cited patents of a company since 2020 | [`patents`](#patents) | `GET /patents` |
 | Company logo | [`logo`](#logo) | `GET /logo` |
 
 ## Financial statements
 
 <a id="income-statement"></a>
-### Income statement, main lines, every quarter
+### Income statement, main lines, annual and quarterly
 
 ```python
 dp.income_statements_summary(symbol="AAPL")
@@ -62,7 +61,7 @@ dp.income_statements_summary(symbol="AAPL")
 curl -H "apikey: $DATAPORIUM_API_KEY" "https://api.dataporium.io/income-statements-summary?symbol=AAPL"
 ```
 
-Each period holds its lines as `{metric, value}`. Add `fiscal_year_qtr=2025Q2`, or `fiscal_year` with `fiscal_qtr`, for one period.
+Each period holds its lines as `{metric, value}` under `income_statement`, with `period_type` Annual or Quarterly. Add `fiscal_year_qtr=2025Q2`, or `fiscal_year` with `fiscal_qtr`, for one period.
 
 <a id="income-statement-annual"></a>
 ### Full income statement, every line, annual
@@ -210,17 +209,6 @@ dp.industry(symbol="AAPL")
 
 ```bash
 curl -H "apikey: $DATAPORIUM_API_KEY" "https://api.dataporium.io/industry?symbol=AAPL"
-```
-
-<a id="mergers"></a>
-### Acquisitions made or received by a company
-
-```python
-dp.ma_transactions_summary(symbol="MSFT", transaction_classification="Acquisition")
-```
-
-```bash
-curl -H "apikey: $DATAPORIUM_API_KEY" "https://api.dataporium.io/ma-transactions-summary?symbol=MSFT&transaction_classification=Acquisition"
 ```
 
 <a id="patents"></a>

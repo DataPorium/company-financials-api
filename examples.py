@@ -19,7 +19,7 @@ from dataporium import DataPorium, to_frame
 
 # name: (question, method, parameters, key of the rows inside the answer)
 EXAMPLES = {
-    'income-statement': ('Income statement, main lines, every quarter', 'income_statements_summary', {'symbol': 'AAPL'}, None),
+    'income-statement': ('Income statement, main lines, annual and quarterly', 'income_statements_summary', {'symbol': 'AAPL'}, None),
     'income-statement-annual': ('Full income statement, every line, annual', 'income_statements', {'symbol': 'AAPL', 'period_type': 'Annual'}, None),
     'balance-sheet': ('Balance sheet, main lines', 'balance_sheet_statements_summary', {'symbol': 'MSFT'}, None),
     'cash-flow': ('Cash flow statement, main lines', 'cash_flow_statements_summary', {'symbol': 'MSFT'}, None),
@@ -32,7 +32,6 @@ EXAMPLES = {
     'presentations': ('Investor and earnings presentations', 'presentations', {'symbol': 'AAPL'}, None),
     'company-profile': ('Company profile', 'company_info', {'symbol': 'AAPL'}, None),
     'industry': ('Industry classification (NAICS, SIC)', 'industry', {'symbol': 'AAPL'}, None),
-    'mergers': ('Acquisitions made or received by a company', 'ma_transactions_summary', {'symbol': 'MSFT', 'transaction_classification': 'Acquisition'}, None),
     'patents': ('Most cited patents of a company since 2020', 'patents', {'symbol': 'NVDA', 'year_from': 2020, 'sort': 'cited_by', 'order': 'desc', 'limit': 25}, None),
     'logo': ('Company logo', 'logo', {'symbol': 'AAPL'}, None),
 }
@@ -44,7 +43,7 @@ def rows(answer, key=None):
         frame = to_frame(answer, key=key)
     except (KeyError, TypeError):
         return None
-    return frame if len(frame.columns) > 1 or len(frame) > 1 else None
+    return frame if len(frame) > 1 else None  # one record reads better as JSON
 
 
 def main(argv: list[str] | None = None) -> int:
